@@ -1,4 +1,4 @@
-package io.jenkins.plugins.sample;
+package io.jenkins.plugins;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
