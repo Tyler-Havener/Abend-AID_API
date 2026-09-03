@@ -41,6 +41,8 @@
 
     <spotless.check.skip>false</spotless.check.skip>
     <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
+    <ban-deprecated-stapler.skip>false</ban-deprecated-stapler.skip>
+    <banObsoleteDependencyOverrides.skip >false</banObsoleteDependencyOverrides.skip >
     <ban-commons-lang-2.skip>false</ban-commons-lang-2.skip>
     <hpi.strictBundledArtifacts>true</hpi.strictBundledArtifacts>
   </properties>
@@ -51,7 +53,7 @@
         <!-- Pick up common dependencies for the selected LTS line: https://github.com/jenkinsci/bom#usage -->
         <groupId>io.jenkins.tools.bom</groupId>
         <artifactId>bom-${jenkins.baseline}.x</artifactId>
-        <version>6237.v4da_61a_4a_19e5</version>
+        <version>6607.v3ed3d8ddfed8</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
