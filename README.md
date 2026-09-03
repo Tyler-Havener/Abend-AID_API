@@ -6,10 +6,10 @@ Abend-AID Jenkins Plugins is used to request Abend-AID APIs(link to doc) that ar
 The Plugin can be downloaded and installed(still figuring this part out).
 
 The Plugin will need:
- A Configuration that will connect to a CES instant that will have a host connection to an Abend-AID Viewer(Defining host connections - BMC Documentation).
+ A Configuration that will connect to a CES instant that will have a host connection to an Abend-AID Viewer(https://docs.bmc.com/xwiki/bin/view/Mainframe/DevX/BMC-AMI-Common-Enterprise-Services/baces2601/Administering/Defining-host-connections/).
  
 
-A Personal Access Token to request the API from CES(Defining security settings - BMC Documentation).
+A Personal Access Token to request the API from CES(https://docs.bmc.com/xwiki/bin/view/Mainframe/DevX/BMC-AMI-Common-Enterprise-Services/baces2601/Administering/Defining-security-settings/.
 
 
 The following APIs are configured for the Jenkins Plugin.
