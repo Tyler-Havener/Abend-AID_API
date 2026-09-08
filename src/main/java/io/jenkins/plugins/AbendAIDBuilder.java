@@ -16,7 +16,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import jenkins.tasks.SimpleBuildStep;
-import org.jenkinsci.Symbol;
+import hudson.util.Secret;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
@@ -25,12 +25,12 @@ import hudson.util.ListBoxModel;
 public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
 
     private final String name;
-    private final String token;
+    private final Secret token;
     private final String abendAPI;
     private final String reportNum;        
 
     @DataBoundConstructor
-    public AbendAIDBuilder(String name, String token, String abendAPI, String reportNum) {
+    public AbendAIDBuilder(String name, Secret token, String abendAPI, String reportNum) {
         this.name = name;
         this.token = token;
         this.abendAPI = abendAPI;
@@ -40,8 +40,8 @@ public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
     public String getName() {
         return name;
     }
-    public String getToken() {
-        return token;
+    public Secret getToken() {
+        return this.token;
     }
         public String getAPI() {
         return abendAPI;
@@ -67,19 +67,18 @@ public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
             URIabend = String.format("http://%s/compuware/ws/abendaidapi/%s", name, abendAPI);}
         if (abendAPI.equals("report")){
             URIabend = String.format("http://%s/compuware/ws/abendaidapi/diagnosticsummary?data=RPT=%s", name, reportNum);}
-
-        listener.getLogger().println("URIabend: " + URIabend);
-        HttpRequest request = HttpRequest.newBuilder()
+            String tokenstr = Secret.toString(token);
+            listener.getLogger().println("URIabend: " + URIabend);
+            HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URIabend))
                 .GET() // Default method, optional to explicitly chain
                 .header("Accept", "application/json")
-                .header("Authorization", token)
+                .header("Authorization", tokenstr)
                 .build();
 
         try {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            listener.getLogger().println("Token: " + token);
             listener.getLogger().println("API: " + abendAPI);
             listener.getLogger().println("report: " + reportNum);
             listener.getLogger().println("Token: " + URIabend);
