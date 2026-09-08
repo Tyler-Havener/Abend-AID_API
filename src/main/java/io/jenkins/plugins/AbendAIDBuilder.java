@@ -23,7 +23,8 @@ import org.kohsuke.stapler.QueryParameter;
 import hudson.util.ListBoxModel;
 
 public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
-
+    private static final HttpClient client =
+        HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
     private final String name;
     private final Secret token;
     private final String abendAPI;
@@ -55,7 +56,6 @@ public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener)
             throws InterruptedException, IOException {
-                        HttpClient client = HttpClient.newHttpClient();
 
 
 
@@ -81,7 +81,6 @@ public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             listener.getLogger().println("API: " + abendAPI);
             listener.getLogger().println("report: " + reportNum);
-            listener.getLogger().println("Token: " + URIabend);
             listener.getLogger().println("Response" + response.body());
             String responseBody = response.body();
             try {
