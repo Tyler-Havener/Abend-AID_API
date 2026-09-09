@@ -1,4 +1,4 @@
-package bmc.jenkins.plugins.abendaid;
+package io.jenkins.plugins;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
@@ -21,10 +21,11 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import hudson.util.ListBoxModel;
+import hudson.ProxyConfiguration;
+
 
 public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
-    private static final HttpClient client =
-        HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
+
     private final String name;
     private final Secret token;
     private final String abendAPI;
@@ -59,20 +60,21 @@ public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
 
 
 
-        String URIabend = "test";
+        URI URIabend = URI.create("test");
+        HttpClient client = ProxyConfiguration.newHttpClientBuilder().build();
             listener.getLogger().println("API: " + abendAPI);
             listener.getLogger().println("report: " + reportNum);
         if (abendAPI.equals("query")){
-            URIabend = String.format("http://%s/compuware/ws/abendaidapi/%s", name, abendAPI);}
+            URIabend = URI.create("http://"+name+"/compuware/ws/abendaidapi/"+abendAPI);}
         if (abendAPI.equals("report")){
-            URIabend = String.format("http://%s/compuware/ws/abendaidapi/diagnosticsummary?data=RPT=%s", name, reportNum);}
+            URIabend = URI.create("http://"+name+"/compuware/ws/abendaidapi/diagnosticsummary?data=RPT="+reportNum);}
             String tokenstr = Secret.toString(token);
             listener.getLogger().println("URIabend: " + URIabend);
-            HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(URIabend))
-                .GET() // Default method, optional to explicitly chain
-                .header("Accept", "application/json")
+
+            HttpRequest request = ProxyConfiguration.newHttpRequestBuilder(URIabend)
+                .header("Content-Type", "application/json")
                 .header("Authorization", tokenstr)
+                .GET() 
                 .build();
 
         try {
@@ -80,6 +82,7 @@ public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             listener.getLogger().println("API: " + abendAPI);
             listener.getLogger().println("report: " + reportNum);
+            System.out.println("Response" + response.body());
             listener.getLogger().println("Response" + response.body());
             String responseBody = response.body();
             try {
@@ -107,7 +110,6 @@ public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
     }
 
     @Extension
-    @symbol("abendaid")
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
         public ListBoxModel doFillAbendAPIItems() {
             ListBoxModel items = new ListBoxModel();
