@@ -9,9 +9,7 @@
         <f:password />
      </f:entry>
 
-    <f:entry name="abendAPI" title="Abend-AID API" field="abendAPI">
-        <f:select id="apiDropdown" onChange="abendAPI(this.value)"/>
-    </f:entry>
+    <st:adjunct includes="bmc.jenkins.plugins.abendaid.AbendAIDBuilder.abendAPI"/>
 
     <div id="reportNum" style="display: none;">
         <f:entry title="${%Report}" field="reportNum">
@@ -19,5 +17,5 @@
         </f:entry>
     </div>
 
-<st:adjunct includes="io.jenkins.plugins.AbendAIDBuilder.reportNum"/>
+<st:adjunct includes="bmc.jenkins.plugins.abendaid.AbendAIDBuilder.reportNum"/>
 </j:jelly>
