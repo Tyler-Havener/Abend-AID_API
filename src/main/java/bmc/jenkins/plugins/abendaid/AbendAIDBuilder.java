@@ -60,7 +60,6 @@ public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
 
 
         String URIabend = "test";
-            listener.getLogger().println("Token: " + token);
             listener.getLogger().println("API: " + abendAPI);
             listener.getLogger().println("report: " + reportNum);
         if (abendAPI.equals("query")){
@@ -108,6 +107,7 @@ public class AbendAIDBuilder extends Builder implements SimpleBuildStep {
     }
 
     @Extension
+    @symbol("abendaid")
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
         public ListBoxModel doFillAbendAPIItems() {
             ListBoxModel items = new ListBoxModel();
