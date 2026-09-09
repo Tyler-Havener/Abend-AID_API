@@ -9,7 +9,7 @@
         <f:password />
      </f:entry>
 
-    <st:adjunct includes="bmc.jenkins.plugins.abendaid.AbendAIDBuilder.abendAPI"/>
+    <st:adjunct includes="bmc.jenkins.plugins.abendaid.abendAPI"/>
 
     <div id="reportNum" style="display: none;">
         <f:entry title="${%Report}" field="reportNum">
@@ -17,5 +17,5 @@
         </f:entry>
     </div>
 
-<st:adjunct includes="bmc.jenkins.plugins.abendaid.AbendAIDBuilder.reportNum"/>
+<st:adjunct includes="bmc.jenkins.plugins.abendaid.reportNum"/>
 </j:jelly>
