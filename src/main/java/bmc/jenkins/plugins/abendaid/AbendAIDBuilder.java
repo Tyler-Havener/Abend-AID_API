@@ -1,4 +1,4 @@
-package io.jenkins.plugins;
+package bmc.jenkins.plugins.abendaid;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
